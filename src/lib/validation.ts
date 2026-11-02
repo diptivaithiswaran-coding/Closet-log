@@ -49,3 +49,37 @@ export function readPieceForm(formData: FormData): PieceInput {
     purchased_on: text("purchased_on"),
   };
 }
+
+export type OutfitInput = {
+  worn_on: string | null;
+  occasion: string | null;
+  notes: string | null;
+  piece_ids: number[];
+};
+
+export type OutfitErrors = Partial<Record<keyof OutfitInput, string>>;
+
+export function validateOutfit(o: OutfitInput): OutfitErrors {
+  const errors: OutfitErrors = {};
+  if (!o.worn_on) errors.worn_on = "Pick the day you wore this.";
+  else {
+    const today = new Date().toISOString().slice(0, 10);
+    if (o.worn_on > today) errors.worn_on = "You can't log an outfit for a day that hasn't happened yet.";
+  }
+  if (o.piece_ids.length === 0) errors.piece_ids = "Pick at least one piece you wore.";
+  if (o.occasion && o.occasion.length > 80) errors.occasion = "Keep the occasion under 80 characters.";
+  return errors;
+}
+
+export function readOutfitForm(formData: FormData): OutfitInput {
+  const text = (key: string) => {
+    const v = String(formData.get(key) ?? "").trim();
+    return v === "" ? null : v;
+  };
+  return {
+    worn_on: text("worn_on"),
+    occasion: text("occasion"),
+    notes: text("notes"),
+    piece_ids: formData.getAll("piece_ids").map(Number).filter((n) => Number.isFinite(n)),
+  };
+}

@@ -14,6 +14,16 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
   const { data: piece } = await supabase.from("pieces").select("*").eq("id", id).maybeSingle<Piece>();
   if (!piece) notFound();
 
+  // Every outfit this piece was part of, newest first.
+  const { data: worn } = await supabase
+    .from("outfit_pieces")
+    .select("outfits(id, worn_on, occasion)")
+    .eq("piece_id", piece.id);
+  const outfits = (worn ?? [])
+    .map((r) => r.outfits as unknown as { id: number; worn_on: string; occasion: string | null } | null)
+    .filter((o): o is { id: number; worn_on: string; occasion: string | null } => !!o)
+    .sort((a, b) => b.worn_on.localeCompare(a.worn_on));
+
   return (
     <>
       <Header email={user.email ?? ""} />
@@ -38,6 +48,7 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
               <dt>Color</dt><dd>{piece.color ?? "—"}</dd>
               <dt>Price</dt><dd>{money(piece.price)}</dd>
               <dt>Bought</dt><dd>{niceDate(piece.purchased_on)}</dd>
+              <dt>Worn</dt><dd>{outfits.length} {outfits.length === 1 ? "time" : "times"}</dd>
             </dl>
             <div className="actions">
               <Link href={`/pieces/${piece.id}/edit`} className="btn btn-secondary">Edit</Link>
@@ -45,6 +56,20 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
             </div>
           </div>
         </div>
+
+        {outfits.length > 0 && (
+          <section className="worn-in">
+            <h2>Worn in</h2>
+            <ul>
+              {outfits.map((o) => (
+                <li key={o.id}>
+                  <Link href={`/outfits/${o.id}`}>{niceDate(o.worn_on)}</Link>
+                  {o.occasion && <span className="muted"> · {o.occasion}</span>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
     </>
   );
