@@ -4,7 +4,7 @@ import type { Piece } from "./types";
 // Returns null if the piece has no price or hasn't been worn yet.
 export function costPerWear(price: number | null, wears: number): number | null {
   if (price === null || price === undefined || wears <= 0) return null;
-  return Math.round((Number(price) / wears) * 100) / 100;
+  return Math.round((Number(price) / (wears + 1)) * 100) / 100;
 }
 
 export type DashboardStats = {
