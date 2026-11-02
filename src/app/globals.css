@@ -374,3 +374,14 @@ textarea { resize: vertical; }
 .forgotten-section h2 { margin-bottom: 0.25rem; }
 .forgotten-section .grid { margin-top: 1rem; }
 .forgotten-note { color: var(--rose-dark); margin: 0.15rem 0 0; }
+/* Random pick */
+.pick-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 220px));
+  gap: 1.25rem;
+  min-height: 300px;
+}
+@media (max-width: 640px) { .pick-row { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; } }
+.pick-slot .eyebrow { margin-bottom: 0.4rem; }
+.pick-missing { text-align: center; padding: 1rem; border-style: dashed; }
+.pick-actions { margin-top: 1.5rem; }
