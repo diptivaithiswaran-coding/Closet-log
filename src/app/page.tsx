@@ -1,20 +1,41 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
+import { requireUser } from "@/lib/auth";
+import type { Piece } from "@/lib/types";
 import Header from "./Header";
+import PieceCard from "./PieceCard";
 
 export default async function Home() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  const { supabase, user } = await requireUser();
+
+  const { data } = await supabase
+    .from("pieces")
+    .select("*")
+    .order("created_at", { ascending: false });
+  const pieces = (data ?? []) as Piece[];
 
   return (
     <>
       <Header email={user.email ?? ""} />
       <main className="page">
-        <h1>My closet</h1>
-        <p className="muted">You're logged in. Your pieces will show up here.</p>
+        <div className="page-head">
+          <div>
+            <h1>My closet</h1>
+            <p className="muted">{pieces.length} {pieces.length === 1 ? "piece" : "pieces"}</p>
+          </div>
+          <Link href="/pieces/new" className="btn">+ Add piece</Link>
+        </div>
+
+        {pieces.length === 0 ? (
+          <div className="empty card">
+            <h2>Your closet is empty</h2>
+            <p className="muted">Add your first piece to get started.</p>
+            <Link href="/pieces/new" className="btn">+ Add piece</Link>
+          </div>
+        ) : (
+          <div className="grid">
+            {pieces.map((p) => <PieceCard key={p.id} piece={p} />)}
+          </div>
+        )}
       </main>
     </>
   );
