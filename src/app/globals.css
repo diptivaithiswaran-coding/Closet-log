@@ -320,3 +320,17 @@ textarea { resize: vertical; }
   padding: 0.6rem 1.1rem;
 }
 .star-inline.on { border-color: var(--rose); color: var(--rose-dark); }
+
+/* Find things */
+.findbar {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.findbar input[type="search"] { min-width: 0; }
+@media (max-width: 640px) {
+  .findbar { grid-template-columns: 1fr 1fr; }
+  .findbar input[type="search"] { grid-column: 1 / -1; }
+}
