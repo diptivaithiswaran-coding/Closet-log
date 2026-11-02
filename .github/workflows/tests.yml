@@ -1,0 +1,23 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test -- --reporter=verbose
+        env:
+          # Public values (the same ones the live site uses), not secrets.
+          NEXT_PUBLIC_SUPABASE_URL: https://ygqqfrfgjobruzdguvxf.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_Szh9-LcfSSQV8xmjtqGcmA_50SA_v4N
