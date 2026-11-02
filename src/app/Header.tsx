@@ -6,7 +6,9 @@ export default function Header({ email }: { email: string }) {
     <header className="header">
       <Link href="/" className="brand">Closet Log</Link>
       <nav className="nav">
-        <span className="muted small">{email}</span>
+        <Link href="/">Closet</Link>
+        <Link href="/outfits">Outfits</Link>
+        <span className="muted small hide-sm">{email}</span>
         <form action={logOut}>
           <button className="btn-link">Log out</button>
         </form>
