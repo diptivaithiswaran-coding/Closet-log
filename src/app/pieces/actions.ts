@@ -7,9 +7,17 @@ import { readPieceForm, validatePiece, type FieldErrors } from "@/lib/validation
 
 export type PieceFormState = { error?: string; fieldErrors?: FieldErrors };
 
+// Only accept photo links that point into this user's own folder in our bucket.
+function safePhotoUrl(url: string | null, userId: string): string | null {
+  if (!url) return null;
+  const prefix = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${userId}/`;
+  return url.startsWith(prefix) ? url : null;
+}
+
 export async function createPiece(_prev: PieceFormState, formData: FormData): Promise<PieceFormState> {
-  const { supabase } = await requireUser();
+  const { supabase, user } = await requireUser();
   const piece = readPieceForm(formData);
+  piece.photo_url = safePhotoUrl(piece.photo_url, user.id);
   const fieldErrors = validatePiece(piece);
   if (Object.keys(fieldErrors).length > 0) {
     return { error: "A couple of things need fixing before this can be saved.", fieldErrors };
@@ -27,8 +35,9 @@ export async function updatePiece(
   _prev: PieceFormState,
   formData: FormData
 ): Promise<PieceFormState> {
-  const { supabase } = await requireUser();
+  const { supabase, user } = await requireUser();
   const piece = readPieceForm(formData);
+  piece.photo_url = safePhotoUrl(piece.photo_url, user.id);
   const fieldErrors = validatePiece(piece);
   if (Object.keys(fieldErrors).length > 0) {
     return { error: "A couple of things need fixing before this can be saved.", fieldErrors };
