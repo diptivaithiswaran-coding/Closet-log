@@ -368,3 +368,9 @@ textarea { resize: vertical; }
 .file-btn { position: relative; overflow: hidden; font-size: 0.95rem; padding: 0.55rem 1.1rem; }
 .file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .file-btn:focus-within { outline: 2px solid var(--rose); }
+
+/* Forgotten pieces */
+.forgotten-section { margin-bottom: 2.5rem; }
+.forgotten-section h2 { margin-bottom: 0.25rem; }
+.forgotten-section .grid { margin-top: 1rem; }
+.forgotten-note { color: var(--rose-dark); margin: 0.15rem 0 0; }
