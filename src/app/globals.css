@@ -1,0 +1,115 @@
+:root {
+  --cream: #faf7f2;
+  --ink: #1c1c1c;
+  --rose: #c98b8b;
+  --rose-dark: #a96d6d;
+  --line: #e8e1d6;
+  --muted: #6f6a63;
+  --card: #ffffff;
+  --error: #b3261e;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, .brand {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.6rem; }
+
+a { color: var(--ink); text-decoration-color: var(--rose); text-underline-offset: 3px; }
+
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.header .brand { font-size: 1.6rem; text-decoration: none; }
+.nav { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+.auth { max-width: 400px; margin: 0 auto; padding: 4rem 1rem; text-align: center; }
+.auth .brand { font-size: 2.6rem; }
+.auth form { text-align: left; margin-top: 1.5rem; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.stack { display: flex; flex-direction: column; gap: 1rem; }
+
+label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.9rem; font-weight: 500; }
+
+input, select, textarea {
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--rose); border-color: var(--rose); }
+
+.btn {
+  font: inherit;
+  font-weight: 500;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+.btn:hover { background: #333; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+.btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+.btn-secondary:hover { background: var(--line); }
+.btn-danger { background: var(--error); }
+.btn-danger:hover { background: #8f1e18; }
+
+.btn-link {
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rose);
+  text-underline-offset: 3px;
+}
+
+.error {
+  color: var(--error);
+  background: #fbeaea;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
