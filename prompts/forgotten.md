@@ -10,7 +10,7 @@
 - `src/lib/forgotten.ts` holds the logic.
 
 ## Decision: what about pieces I've never worn?
-My plan said "pieces I haven't worn in 30+ days." But a piece I've never worn has no "last worn" date, so it wouldn't show up under that rule, and those are often the most forgotten pieces. The agent asked how to handle it, and I chose to give never-worn pieces their own section instead of hiding them. That way, things I just added today don't look "forgotten," but they're still visible.
+My plan said "pieces I haven't worn in 30+ days." But a piece I've never worn has no "last worn" date, so it wouldn't show up under that rule, and those are often the most forgotten pieces. The agent made this call on its own: never-worn pieces get their own section instead of being hidden or lumped in. That way, things I just added today don't look "forgotten," but they're still visible. (Agent's decision, not mine. I went along with it.)
 
 ## Things that came up
 - "Days since" uses Pacific time for "today," so the count doesn't jump a day early in the evening.
