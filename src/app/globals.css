@@ -334,3 +334,30 @@ textarea { resize: vertical; }
   .findbar { grid-template-columns: 1fr 1fr; }
   .findbar input[type="search"] { grid-column: 1 / -1; }
 }
+
+/* Dashboard */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.tile { padding: 1.25rem; }
+.tile p { margin: 0; }
+.tile-label { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.25rem !important; }
+.tile-value {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+.tile-value-sm { font-size: 1.5rem; }
+.tile-value a { text-decoration: none; }
+.chart-card { margin-bottom: 1.25rem; }
+.chart-card h2 { margin-bottom: 0; }
+.chart { margin-top: 1rem; }
+.cpw-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
+.cpw-table th { text-align: left; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--line); padding: 0.5rem 0.5rem 0.5rem 0; }
+.cpw-table td { border-bottom: 1px solid var(--line); padding: 0.6rem 0.5rem 0.6rem 0; }
+.cpw-table tr:last-child td { border-bottom: none; }
+@media (max-width: 520px) { .cpw-table th:nth-child(2), .cpw-table td:nth-child(2) { display: none; } }
