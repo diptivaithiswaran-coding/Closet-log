@@ -3,31 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
+import { readPieceForm, validatePiece, type FieldErrors } from "@/lib/validation";
 
-export type PieceFormState = { error?: string };
-
-function readForm(formData: FormData) {
-  const text = (key: string) => {
-    const v = String(formData.get(key) ?? "").trim();
-    return v === "" ? null : v;
-  };
-  const priceText = text("price");
-  return {
-    name: text("name"),
-    category: text("category"),
-    brand: text("brand"),
-    color: text("color"),
-    price: priceText === null ? null : Number(priceText),
-    purchased_on: text("purchased_on"),
-  };
-}
+export type PieceFormState = { error?: string; fieldErrors?: FieldErrors };
 
 export async function createPiece(_prev: PieceFormState, formData: FormData): Promise<PieceFormState> {
   const { supabase } = await requireUser();
-  const piece = readForm(formData);
+  const piece = readPieceForm(formData);
+  const fieldErrors = validatePiece(piece);
+  if (Object.keys(fieldErrors).length > 0) {
+    return { error: "A couple of things need fixing before this can be saved.", fieldErrors };
+  }
 
   const { data, error } = await supabase.from("pieces").insert(piece).select("id").single();
-  if (error) return { error: error.message };
+  if (error) return { error: "Something went wrong saving this piece. Please try again." };
 
   revalidatePath("/");
   redirect(`/pieces/${data.id}`);
@@ -39,10 +28,14 @@ export async function updatePiece(
   formData: FormData
 ): Promise<PieceFormState> {
   const { supabase } = await requireUser();
-  const piece = readForm(formData);
+  const piece = readPieceForm(formData);
+  const fieldErrors = validatePiece(piece);
+  if (Object.keys(fieldErrors).length > 0) {
+    return { error: "A couple of things need fixing before this can be saved.", fieldErrors };
+  }
 
   const { error } = await supabase.from("pieces").update(piece).eq("id", id);
-  if (error) return { error: error.message };
+  if (error) return { error: "Something went wrong saving this piece. Please try again." };
 
   revalidatePath("/");
   revalidatePath(`/pieces/${id}`);

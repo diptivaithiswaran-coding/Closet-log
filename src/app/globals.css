@@ -193,3 +193,9 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--rose); bord
 
 .empty { text-align: center; padding: 3rem 1.5rem; }
 .empty .btn { margin-top: 1rem; }
+
+/* Validation */
+.required { color: var(--rose-dark); }
+.field-error { color: var(--error); font-size: 0.85rem; font-weight: 400; }
+.has-error input, .has-error select { border-color: var(--error); background: #fffafa; }
+.form > .error { margin-bottom: 0.25rem; }
