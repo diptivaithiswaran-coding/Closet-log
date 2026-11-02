@@ -11,6 +11,7 @@ export default function Header({ email }: { email: string }) {
         <Link href="/starred">Starred</Link>
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/forgotten">Forgotten</Link>
+        <Link href="/pick">Random pick</Link>
         <span className="muted small hide-sm">{email}</span>
         <form action={logOut}>
           <button className="btn-link">Log out</button>
