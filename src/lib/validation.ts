@@ -7,6 +7,7 @@ export type PieceInput = {
   color: string | null;
   price: number | null;
   purchased_on: string | null;
+  photo_url: string | null;
 };
 
 export type FieldErrors = Partial<Record<keyof PieceInput, string>>;
@@ -47,6 +48,7 @@ export function readPieceForm(formData: FormData): PieceInput {
     color: text("color"),
     price: priceText === null ? null : Number(priceText),
     purchased_on: text("purchased_on"),
+    photo_url: text("photo_url"),
   };
 }
 

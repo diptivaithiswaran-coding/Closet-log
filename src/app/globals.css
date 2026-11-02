@@ -361,3 +361,10 @@ textarea { resize: vertical; }
 .cpw-table td { border-bottom: 1px solid var(--line); padding: 0.6rem 0.5rem 0.6rem 0; }
 .cpw-table tr:last-child td { border-bottom: none; }
 @media (max-width: 520px) { .cpw-table th:nth-child(2), .cpw-table td:nth-child(2) { display: none; } }
+
+/* Photo upload */
+.photo-picker { display: flex; gap: 1rem; align-items: center; }
+.photo-thumb { width: 96px; flex-shrink: 0; }
+.file-btn { position: relative; overflow: hidden; font-size: 0.95rem; padding: 0.55rem 1.1rem; }
+.file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.file-btn:focus-within { outline: 2px solid var(--rose); }

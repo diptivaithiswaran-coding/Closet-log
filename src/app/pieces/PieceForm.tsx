@@ -6,6 +6,7 @@ import { CATEGORIES, type Piece } from "@/lib/types";
 import { capitalize } from "@/lib/format";
 import { readPieceForm, validatePiece, type FieldErrors } from "@/lib/validation";
 import type { PieceFormState } from "./actions";
+import PhotoPicker from "./PhotoPicker";
 
 type Props = {
   action: (prev: PieceFormState, formData: FormData) => Promise<PieceFormState>;
@@ -50,6 +51,8 @@ export default function PieceForm({ action, piece, submitLabel, cancelHref }: Pr
             : state.error}
         </p>
       )}
+
+      <PhotoPicker initialUrl={piece?.photo_url ?? null} />
 
       <Field label="Name" required error={errors.name}>
         <input
