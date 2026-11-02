@@ -3,6 +3,7 @@ import { requireUser } from "@/lib/auth";
 import type { Piece } from "@/lib/types";
 import Header from "./Header";
 import PieceCard from "./PieceCard";
+import { getStarredIds } from "@/lib/stars";
 
 export default async function Home() {
   const { supabase, user } = await requireUser();
@@ -12,6 +13,7 @@ export default async function Home() {
     .select("*")
     .order("created_at", { ascending: false });
   const pieces = (data ?? []) as Piece[];
+  const starred = await getStarredIds(supabase);
 
   return (
     <>
@@ -33,7 +35,7 @@ export default async function Home() {
           </div>
         ) : (
           <div className="grid">
-            {pieces.map((p) => <PieceCard key={p.id} piece={p} />)}
+            {pieces.map((p) => <PieceCard key={p.id} piece={p} starred={starred.has(p.id)} />)}
           </div>
         )}
       </main>

@@ -288,3 +288,35 @@ textarea { resize: vertical; }
 .worn-in { margin-top: 2.5rem; }
 .worn-in ul { padding-left: 1.1rem; margin: 0; }
 .worn-in li { margin: 0.25rem 0; }
+
+/* Stars */
+.piece-wrap { position: relative; }
+.star {
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.star svg { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; transition: fill 0.15s, stroke 0.15s; }
+.star.on svg { fill: var(--rose); stroke: var(--rose); }
+.star-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.star-overlay:hover svg { stroke: var(--rose); }
+.star-inline {
+  background: transparent;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+}
+.star-inline.on { border-color: var(--rose); color: var(--rose-dark); }

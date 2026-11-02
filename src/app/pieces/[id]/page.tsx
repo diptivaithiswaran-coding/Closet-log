@@ -5,6 +5,8 @@ import type { Piece } from "@/lib/types";
 import { capitalize, money, niceDate } from "@/lib/format";
 import Header from "../../Header";
 import DeleteButton from "./DeleteButton";
+import StarButton from "../../stars/StarButton";
+import { getStarredIds } from "@/lib/stars";
 
 export default async function PiecePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -13,6 +15,7 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
   // Row-level security means this only finds the piece if it belongs to the logged-in user.
   const { data: piece } = await supabase.from("pieces").select("*").eq("id", id).maybeSingle<Piece>();
   if (!piece) notFound();
+  const isStarred = (await getStarredIds(supabase)).has(piece.id);
 
   // Every outfit this piece was part of, newest first.
   const { data: worn } = await supabase
@@ -51,6 +54,7 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
               <dt>Worn</dt><dd>{outfits.length} {outfits.length === 1 ? "time" : "times"}</dd>
             </dl>
             <div className="actions">
+              <StarButton pieceId={piece.id} starred={isStarred} variant="inline" />
               <Link href={`/pieces/${piece.id}/edit`} className="btn btn-secondary">Edit</Link>
               <DeleteButton id={piece.id} name={piece.name} />
             </div>
