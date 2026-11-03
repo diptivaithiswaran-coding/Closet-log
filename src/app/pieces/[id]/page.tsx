@@ -27,6 +27,7 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
     .map((r) => r.outfits as unknown as { id: number; worn_on: string; occasion: string | null } | null)
     .filter((o): o is { id: number; worn_on: string; occasion: string | null } => !!o)
     .sort((a, b) => b.worn_on.localeCompare(a.worn_on));
+  const totalWears = (piece.past_wears ?? 0) + outfits.length;
 
   return (
     <>
@@ -52,7 +53,15 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
               <dt>Color</dt><dd>{piece.color ?? "—"}</dd>
               <dt>Price</dt><dd>{money(piece.price)}</dd>
               <dt>Bought</dt><dd>{niceDate(piece.purchased_on)}</dd>
-              <dt>Worn</dt><dd>{outfits.length} {outfits.length === 1 ? "time" : "times"}</dd>
+              <dt>Worn</dt>
+              <dd>
+                {totalWears} {totalWears === 1 ? "time" : "times"}
+                {piece.past_wears > 0 && (
+                  <span className="muted small">
+                    {" "}({piece.past_wears} before Closet Log + {outfits.length} logged)
+                  </span>
+                )}
+              </dd>
             </dl>
             <div className="actions">
               <StarButton pieceId={piece.id} starred={isStarred} variant="inline" />

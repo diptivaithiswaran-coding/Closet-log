@@ -128,6 +128,23 @@ export default function PieceForm({ action, piece, submitLabel, cancelHref }: Pr
         </Field>
       </div>
 
+      <Field label="Worn before I started logging" error={errors.past_wears}>
+        <input
+          name="past_wears"
+          type="number"
+          inputMode="numeric"
+          step="1"
+          min="0"
+          defaultValue={piece?.past_wears ?? 0}
+          aria-invalid={!!errors.past_wears}
+          aria-describedby="past-wears-hint"
+          onChange={() => clearError("past_wears")}
+        />
+        <span id="past-wears-hint" className="muted small">
+          Rough guess is fine. Outfits you log from now on get added on top.
+        </span>
+      </Field>
+
       <div className="actions">
         <button className="btn" disabled={pending}>{pending ? "Saving…" : submitLabel}</button>
         <Link href={cancelHref} className="btn btn-secondary">Cancel</Link>

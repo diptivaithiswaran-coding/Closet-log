@@ -16,6 +16,7 @@ function piece(id: number, price: number | null): Piece {
     price,
     purchased_on: null,
     photo_url: null,
+    past_wears: 0,
     created_at: "2026-11-01T00:00:00Z",
   };
 }
