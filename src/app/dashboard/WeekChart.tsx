@@ -4,9 +4,9 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 
 type Point = { week: string; label: string; count: number };
 
-export default function WeekChart({ data }: { data: Point[] }) {
+export default function WeekChart({ data, tooltipPrefix = "Week of " }: { data: Point[]; tooltipPrefix?: string }) {
   return (
-    <div className="chart" role="img" aria-label="Bar chart of outfits logged per week for the last 8 weeks">
+    <div className="chart" role="img" aria-label="Bar chart of outfits logged over time">
       <ResponsiveContainer width="100%" height={240}>
         <BarChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke="#f6cadb" />
@@ -15,7 +15,7 @@ export default function WeekChart({ data }: { data: Point[] }) {
           <Tooltip
             cursor={{ fill: "rgba(232, 51, 122, 0.1)" }}
             contentStyle={{ borderRadius: 8, border: "1px solid #f6cadb", fontSize: 13 }}
-            labelFormatter={(l) => `Week of ${l}`}
+            labelFormatter={(l) => `${tooltipPrefix}${l}`}
             formatter={(v) => [`${v} ${v === 1 ? "outfit" : "outfits"}`, ""]}
             separator=""
           />

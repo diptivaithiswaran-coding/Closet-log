@@ -65,3 +65,23 @@ export function outfitsPerWeek(wornOn: string[], today: string, weeks = 8) {
   }
   return result;
 }
+
+// Outfits logged per month for one year, Jan → Dec.
+export function outfitsPerMonth(wornOn: string[], year: number) {
+  const counts = new Array(12).fill(0);
+  for (const d of wornOn) {
+    if (Number(d.slice(0, 4)) === year) counts[Number(d.slice(5, 7)) - 1] += 1;
+  }
+  return counts.map((count, i) => ({
+    week: `${year}-${String(i + 1).padStart(2, "0")}`,
+    label: new Date(Date.UTC(year, i, 15)).toLocaleDateString("en-US", { month: "short", timeZone: "UTC" }),
+    count,
+  }));
+}
+
+// Years that have at least one outfit, newest first, always including this year.
+export function outfitYears(wornOn: string[], thisYear: number): number[] {
+  const years = new Set<number>([thisYear]);
+  for (const d of wornOn) years.add(Number(d.slice(0, 4)));
+  return [...years].sort((a, b) => b - a);
+}

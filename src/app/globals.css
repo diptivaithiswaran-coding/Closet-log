@@ -451,3 +451,5 @@ textarea { resize: vertical; }
 .photo > .cat-icon { width: 58%; }
 .thumb > .cat-icon { width: 100%; }
 .empty-art { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto 1rem; }
+
+.page-head > select { width: auto; }
