@@ -1,6 +1,6 @@
 import type { Piece } from "./types";
 
-// Cost-per-wear = price ÷ number of outfits the piece appears in.
+// Cost-per-wear = price ÷ total wears (past wears + logged outfits).
 // Returns null if the piece has no price or hasn't been worn yet.
 export function costPerWear(price: number | null, wears: number): number | null {
   if (price === null || price === undefined || wears <= 0) return null;

@@ -104,7 +104,7 @@ export default async function DashboardPage({ searchParams }: Props) {
 
         <section className="card chart-card">
           <h2>Cost-per-wear{year ? " (all time)" : ""}</h2>
-          <p className="muted small">Price ÷ times worn. Lower means the piece is earning its keep.</p>
+          <p className="muted small">Price divided by times worn. Lower means the piece is earning its keep.</p>
           {ranked.length === 0 ? (
             <p className="muted">Log a few outfits with pieces that have a price to see this.</p>
           ) : (
