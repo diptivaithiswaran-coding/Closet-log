@@ -7,6 +7,7 @@ import Header from "../../Header";
 import DeleteButton from "./DeleteButton";
 import StarButton from "../../stars/StarButton";
 import { getStarredIds } from "@/lib/stars";
+import CategoryIcon from "@/app/art/CategoryIcon";
 
 export default async function PiecePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -39,7 +40,7 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
               // eslint-disable-next-line @next/next/no-img-element
               <img src={piece.photo_url} alt={piece.name} />
             ) : (
-              <span className="photo-empty">{capitalize(piece.category)}</span>
+              <CategoryIcon category={piece.category} size={120} />
             )}
           </div>
 

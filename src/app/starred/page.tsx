@@ -3,6 +3,7 @@ import { requireUser } from "@/lib/auth";
 import type { Piece } from "@/lib/types";
 import Header from "../Header";
 import PieceCard from "../PieceCard";
+import EmptyArt from "@/app/art/EmptyArt";
 
 export default async function StarredPage() {
   const { supabase, user } = await requireUser();
@@ -29,6 +30,7 @@ export default async function StarredPage() {
 
         {pieces.length === 0 ? (
           <div className="empty card">
+            <EmptyArt kind="starred" />
             <h2>Nothing starred yet</h2>
             <p className="muted">Tap the ☆ on any piece in your closet to save it here.</p>
             <Link href="/" className="btn">Go to closet</Link>

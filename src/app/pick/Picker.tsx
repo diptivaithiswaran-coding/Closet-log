@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 import type { Piece } from "@/lib/types";
 import { randomOutfit } from "@/lib/pick";
-import { capitalize } from "@/lib/format";
 import { createOutfit, type OutfitFormState } from "../outfits/actions";
+import CategoryIcon from "@/app/art/CategoryIcon";
 
 export default function Picker({ pieces }: { pieces: Piece[] }) {
   // Start empty and pick in the browser, so the first pick isn't fixed by the server render.
@@ -36,7 +36,7 @@ export default function Picker({ pieces }: { pieces: Piece[] }) {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={s.piece.photo_url} alt={s.piece.name} />
                   ) : (
-                    <span className="photo-empty">{capitalize(s.piece.category)}</span>
+                    <CategoryIcon category={s.piece.category} size={96} />
                   )}
                 </div>
                 <p className="piece-name" style={{ marginTop: "0.5rem" }}>{s.piece.name}</p>
