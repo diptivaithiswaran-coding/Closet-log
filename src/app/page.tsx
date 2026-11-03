@@ -7,6 +7,7 @@ import { getWearCounts } from "@/lib/wears";
 import Header from "./Header";
 import PieceCard from "./PieceCard";
 import FindBar from "./FindBar";
+import EmptyArt from "@/app/art/EmptyArt";
 
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> };
 
@@ -40,6 +41,7 @@ export default async function Home({ searchParams }: Props) {
 
         {all.length === 0 ? (
           <div className="empty card">
+            <EmptyArt kind="closet" />
             <h2>Your closet is empty</h2>
             <p className="muted">Add your first piece to get started.</p>
             <Link href="/pieces/new" className="btn">+ Add piece</Link>
@@ -49,6 +51,7 @@ export default async function Home({ searchParams }: Props) {
             <FindBar initial={opts} />
             {pieces.length === 0 ? (
               <div className="empty card">
+                <EmptyArt kind="search" />
                 <h2>No matches</h2>
                 <p className="muted">Nothing in your closet matches that. Try a different word or category.</p>
               </div>

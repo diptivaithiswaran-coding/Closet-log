@@ -445,3 +445,9 @@ textarea { resize: vertical; }
   .closet-rail { max-width: 340px; padding-top: 1rem; }
   .auth-panel { padding: 2rem 1.25rem 3rem; align-items: flex-start; }
 }
+
+/* Drawings */
+.cat-icon { display: block; height: auto; }
+.photo > .cat-icon { width: 58%; }
+.thumb > .cat-icon { width: 100%; }
+.empty-art { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto 1rem; }

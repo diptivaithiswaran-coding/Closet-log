@@ -6,6 +6,7 @@ import { CATEGORIES, type Piece } from "@/lib/types";
 import { capitalize } from "@/lib/format";
 import { readOutfitForm, validateOutfit, type OutfitErrors } from "@/lib/validation";
 import type { OutfitFormState } from "./actions";
+import CategoryIcon from "@/app/art/CategoryIcon";
 
 type Props = {
   action: (prev: OutfitFormState, formData: FormData) => Promise<OutfitFormState>;
@@ -100,7 +101,7 @@ export default function OutfitForm({ action, pieces }: Props) {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={p.photo_url} alt="" />
                     ) : (
-                      <span className="photo-empty">{capitalize(p.category)}</span>
+                      <CategoryIcon category={p.category} size={56} />
                     )}
                   </span>
                   <span className="pick-name">{p.name}</span>

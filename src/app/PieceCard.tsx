@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Piece } from "@/lib/types";
 import { capitalize, money } from "@/lib/format";
 import StarButton from "./stars/StarButton";
+import CategoryIcon from "@/app/art/CategoryIcon";
 
 export default function PieceCard({
   piece,
@@ -20,7 +21,7 @@ export default function PieceCard({
             // eslint-disable-next-line @next/next/no-img-element
             <img src={piece.photo_url} alt={piece.name} />
           ) : (
-            <span className="photo-empty">{capitalize(piece.category)}</span>
+            <CategoryIcon category={piece.category} />
           )}
         </div>
         <div className="piece-meta">

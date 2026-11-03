@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { requireUser } from "@/lib/auth";
 import type { OutfitWithPieces } from "@/lib/types";
-import { capitalize, niceDate } from "@/lib/format";
+import { niceDate } from "@/lib/format";
 import Header from "../Header";
+import CategoryIcon from "@/app/art/CategoryIcon";
+import EmptyArt from "@/app/art/EmptyArt";
 
 export default async function OutfitsPage() {
   const { supabase, user } = await requireUser();
@@ -27,6 +29,7 @@ export default async function OutfitsPage() {
 
         {outfits.length === 0 ? (
           <div className="empty card">
+            <EmptyArt kind="outfits" />
             <h2>No outfits yet</h2>
             <p className="muted">Log what you wore today. It's how the app counts wears and cost-per-wear.</p>
             <Link href="/outfits/new" className="btn">+ Log outfit</Link>
@@ -47,7 +50,7 @@ export default async function OutfitsPage() {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={p.photo_url} alt={p.name} />
                         ) : (
-                          capitalize(p.category).slice(0, 1)
+                          <CategoryIcon category={p.category} size={30} />
                         )}
                       </span>
                     ))}
