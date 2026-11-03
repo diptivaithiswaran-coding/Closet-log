@@ -49,13 +49,17 @@ export default async function ForgottenPage() {
         </section>
 
         <section className="forgotten-section">
-          <h2>Never worn yet</h2>
+          <h2>No logged wears yet</h2>
           {neverWorn.length === 0 ? (
-            <p className="muted">Every piece has been in at least one outfit.</p>
+            <p className="muted">Every piece is in at least one logged outfit.</p>
           ) : (
             <>
               <p className="muted small">Not in any outfit you've logged.</p>
-              <Grid items={neverWorn} starred={starred} note={(f) => `In closet ${f.daysSince} ${f.daysSince === 1 ? "day" : "days"}`} />
+              <Grid items={neverWorn} starred={starred} note={(f) =>
+                  f.piece.past_wears > 0
+                    ? `Worn ${f.piece.past_wears}× before Closet Log, not since`
+                    : `Never worn · in closet ${f.daysSince} ${f.daysSince === 1 ? "day" : "days"}`
+                } />
             </>
           )}
         </section>

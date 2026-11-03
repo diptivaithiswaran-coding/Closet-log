@@ -29,6 +29,7 @@ erDiagram
     numeric price
     date purchased_on
     text photo_url
+    int past_wears
     timestamptz created_at
   }
   outfits {
@@ -76,6 +77,7 @@ One row per piece of clothing.
 | price | number (2 decimals) | Optional |
 | purchased_on | date | Optional |
 | photo_url | text | Optional. Link to the photo in the `photos` bucket |
+| past_wears | whole number | Times worn before I started logging outfits. Defaults to 0 |
 | created_at | timestamp | When it was added |
 
 ### outfits
@@ -119,7 +121,8 @@ One table for everyone. One row = "this user starred this piece."
 - **users ↔ pieces (stars):** many-to-many, through **stars**.
 - Deleting a user deletes everything of theirs. Deleting a piece removes it from outfits and stars. Deleting an outfit keeps the pieces.
 
-**Cost-per-wear** isn't stored. It's calculated as price ÷ number of rows in outfit_pieces for that piece.
+**Wears** = `past_wears` + the number of rows in outfit_pieces for that piece.
+**Cost-per-wear** isn't stored. It's calculated as price ÷ wears.
 
 ## Privacy (row-level security)
 
@@ -140,5 +143,6 @@ Compared with section 3 of PLAN.md, the agent built the **same 5 tables, same co
 | created_at is **date** | **timestamp** (date + time) | Needed to sort "newest first" within the same day |
 | price is "number" | **numeric(10,2)** | Money with exactly 2 decimals, so no rounding surprises |
 | Category is free text, 7 options | Still text, now 10 options, plus **category_other** for "Other" | Added jumpsuit, romper, and other later, after realizing some pieces didn't fit |
+| Not in plan | **past_wears** on pieces | My closet existed before the app did; logged outfits alone made old favorites look unworn |
 | Not in plan | **Trigger** that copies sign-ups into users | So every account is a row in my own users table automatically |
 | Not in plan | **Row-level security** rules on every table | My plan said "each user sees only their own rows"; these rules are how |

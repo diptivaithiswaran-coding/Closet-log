@@ -9,6 +9,7 @@ export type PieceInput = {
   price: number | null;
   purchased_on: string | null;
   photo_url: string | null;
+  past_wears: number;
 };
 
 export type FieldErrors = Partial<Record<keyof PieceInput, string>>;
@@ -32,6 +33,12 @@ export function validatePiece(p: PieceInput): FieldErrors {
     errors.price = "Price should be a number, $0 or more.";
   }
 
+  if (!Number.isInteger(p.past_wears) || p.past_wears < 0) {
+    errors.past_wears = "Use a whole number, 0 or more.";
+  } else if (p.past_wears > 9999) {
+    errors.past_wears = "That's a lot of wears. Keep it under 10,000.";
+  }
+
   if (p.purchased_on) {
     const today = new Date().toISOString().slice(0, 10);
     if (p.purchased_on > today) errors.purchased_on = "The purchase date can't be in the future.";
@@ -46,6 +53,7 @@ export function readPieceForm(formData: FormData): PieceInput {
     return v === "" ? null : v;
   };
   const priceText = text("price");
+  const pastText = text("past_wears");
   return {
     name: text("name"),
     category: text("category"),
@@ -56,6 +64,7 @@ export function readPieceForm(formData: FormData): PieceInput {
     price: priceText === null ? null : Number(priceText),
     purchased_on: text("purchased_on"),
     photo_url: text("photo_url"),
+    past_wears: pastText === null ? 0 : Number(pastText),
   };
 }
 

@@ -24,6 +24,7 @@ export type Piece = {
   price: number | null;
   purchased_on: string | null;
   photo_url: string | null;
+  past_wears: number; // worn before I started logging outfits
   created_at: string;
 };
 
