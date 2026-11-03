@@ -35,7 +35,11 @@ export function findPieces(pieces: Piece[], wearCounts: Map<number, number>, opt
   const matches = pieces.filter((p) => {
     if (opts.category && p.category !== opts.category) return false;
     if (!q) return true;
-    return p.name.toLowerCase().includes(q) || (p.brand ?? "").toLowerCase().includes(q);
+    return (
+      p.name.toLowerCase().includes(q) ||
+      (p.brand ?? "").toLowerCase().includes(q) ||
+      (p.category_other ?? "").toLowerCase().includes(q)
+    );
   });
 
   const newest = (a: Piece, b: Piece) => b.created_at.localeCompare(a.created_at);

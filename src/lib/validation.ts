@@ -3,6 +3,7 @@ import { CATEGORIES } from "./types";
 export type PieceInput = {
   name: string | null;
   category: string | null;
+  category_other: string | null;
   brand: string | null;
   color: string | null;
   price: number | null;
@@ -22,6 +23,10 @@ export function validatePiece(p: PieceInput): FieldErrors {
 
   if (!p.category) errors.category = "Pick a category so you can filter by it later.";
   else if (!(CATEGORIES as readonly string[]).includes(p.category)) errors.category = "Pick a category from the list.";
+  else if (p.category === "other") {
+    if (!p.category_other) errors.category_other = "Tell us what it is, like \"Swimsuit\" or \"Saree.\"";
+    else if (p.category_other.length > 40) errors.category_other = "Keep this under 40 characters.";
+  }
 
   if (p.price !== null && (Number.isNaN(p.price) || p.price < 0)) {
     errors.price = "Price should be a number, $0 or more.";
@@ -44,6 +49,8 @@ export function readPieceForm(formData: FormData): PieceInput {
   return {
     name: text("name"),
     category: text("category"),
+    // Only keep the typed-in text when "other" is picked.
+    category_other: text("category") === "other" ? text("category_other") : null,
     brand: text("brand"),
     color: text("color"),
     price: priceText === null ? null : Number(priceText),
