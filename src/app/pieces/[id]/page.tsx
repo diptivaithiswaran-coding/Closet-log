@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth";
-import type { Piece } from "@/lib/types";
-import { capitalize, money, niceDate } from "@/lib/format";
+import { categoryLabel, type Piece } from "@/lib/types";
+import { money, niceDate } from "@/lib/format";
 import Header from "../../Header";
 import DeleteButton from "./DeleteButton";
 import StarButton from "../../stars/StarButton";
@@ -45,7 +45,7 @@ export default async function PiecePage({ params }: { params: Promise<{ id: stri
           </div>
 
           <div className="stack">
-            <p className="eyebrow">{capitalize(piece.category)}</p>
+            <p className="eyebrow">{categoryLabel(piece)}</p>
             <h1>{piece.name}</h1>
             <dl className="facts">
               <dt>Brand</dt><dd>{piece.brand ?? "—"}</dd>

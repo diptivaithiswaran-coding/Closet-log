@@ -18,6 +18,7 @@ type Props = {
 export default function PieceForm({ action, piece, submitLabel, cancelHref }: Props) {
   const [state, formAction, pending] = useActionState(action, {});
   const [clientErrors, setClientErrors] = useState<FieldErrors>({});
+  const [category, setCategory] = useState<string>(piece?.category ?? "");
 
   // Errors from the browser check win; server errors are the backup.
   const errors: FieldErrors = { ...state.fieldErrors, ...clientErrors };
@@ -69,7 +70,10 @@ export default function PieceForm({ action, piece, submitLabel, cancelHref }: Pr
           name="category"
           defaultValue={piece?.category ?? ""}
           aria-invalid={!!errors.category}
-          onChange={() => clearError("category")}
+          onChange={(e) => {
+            setCategory(e.target.value);
+            clearError("category");
+          }}
         >
           <option value="">Pick one…</option>
           {CATEGORIES.map((c) => (
@@ -77,6 +81,20 @@ export default function PieceForm({ action, piece, submitLabel, cancelHref }: Pr
           ))}
         </select>
       </Field>
+
+      {category === "other" && (
+        <Field label="What is it?" required error={errors.category_other}>
+          <input
+            name="category_other"
+            defaultValue={piece?.category_other ?? ""}
+            placeholder="e.g. Swimsuit, saree, lehenga"
+            maxLength={40}
+            autoFocus={!piece}
+            aria-invalid={!!errors.category_other}
+            onChange={() => clearError("category_other")}
+          />
+        </Field>
+      )}
 
       <div className="row">
         <Field label="Brand">

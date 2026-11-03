@@ -10,6 +10,7 @@ function piece(id: number, price: number | null): Piece {
     user_id: "test-user",
     name: `Piece ${id}`,
     category: "top",
+    category_other: null,
     brand: null,
     color: null,
     price,

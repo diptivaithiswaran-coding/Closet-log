@@ -23,6 +23,7 @@ erDiagram
     uuid user_id FK
     text name
     text category
+    text category_other
     text brand
     text color
     numeric price
@@ -68,7 +69,8 @@ One row per piece of clothing.
 | id | number (auto) | **Primary key** |
 | user_id | uuid | **→ users.** Who owns it. Filled in automatically |
 | name | text | Required |
-| category | text | Required. One of: top, bottom, dress, outerwear, shoes, bag, accessory |
+| category | text | Required. One of: top, bottom, dress, jumpsuit, romper, outerwear, shoes, bag, accessory, other |
+| category_other | text | Only when category is "other": what the piece is (e.g. "Swimsuit"). Required then, up to 40 characters |
 | brand | text | Optional |
 | color | text | Optional |
 | price | number (2 decimals) | Optional |
@@ -137,6 +139,6 @@ Compared with section 3 of PLAN.md, the agent built the **same 5 tables, same co
 | pieces/outfits id is "number" | **bigint, auto-numbered** | Postgres picks the next number itself |
 | created_at is **date** | **timestamp** (date + time) | Needed to sort "newest first" within the same day |
 | price is "number" | **numeric(10,2)** | Money with exactly 2 decimals, so no rounding surprises |
-| Category is free text | Still text, but the app only accepts the 7 categories | Checked by validation in the app, not the database |
+| Category is free text, 7 options | Still text, now 10 options, plus **category_other** for "Other" | Added jumpsuit, romper, and other later, after realizing some pieces didn't fit |
 | Not in plan | **Trigger** that copies sign-ups into users | So every account is a row in my own users table automatically |
 | Not in plan | **Row-level security** rules on every table | My plan said "each user sees only their own rows"; these rules are how |
