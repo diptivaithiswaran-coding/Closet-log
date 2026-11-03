@@ -11,11 +11,12 @@ import PhotoPicker from "./PhotoPicker";
 type Props = {
   action: (prev: PieceFormState, formData: FormData) => Promise<PieceFormState>;
   piece?: Piece;
+  loggedWears?: number; // logged outfits this piece is already in
   submitLabel: string;
   cancelHref: string;
 };
 
-export default function PieceForm({ action, piece, submitLabel, cancelHref }: Props) {
+export default function PieceForm({ action, piece, loggedWears = 0, submitLabel, cancelHref }: Props) {
   const [state, formAction, pending] = useActionState(action, {});
   const [clientErrors, setClientErrors] = useState<FieldErrors>({});
   const [category, setCategory] = useState<string>(piece?.category ?? "");
@@ -25,7 +26,7 @@ export default function PieceForm({ action, piece, submitLabel, cancelHref }: Pr
   const hasErrors = Object.keys(clientErrors).length > 0 || !!state.error;
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    const found = validatePiece(readPieceForm(new FormData(e.currentTarget)));
+    const found = validatePiece(readPieceForm(new FormData(e.currentTarget)), loggedWears);
     setClientErrors(found);
     if (Object.keys(found).length > 0) {
       e.preventDefault(); // stop here, keep what they typed
@@ -128,20 +129,22 @@ export default function PieceForm({ action, piece, submitLabel, cancelHref }: Pr
         </Field>
       </div>
 
-      <Field label="Worn before I started logging" error={errors.past_wears}>
+      <Field label="Number of times worn" error={errors.times_worn}>
         <input
-          name="past_wears"
+          name="times_worn"
           type="number"
           inputMode="numeric"
           step="1"
-          min="0"
-          defaultValue={piece?.past_wears ?? 0}
-          aria-invalid={!!errors.past_wears}
-          aria-describedby="past-wears-hint"
-          onChange={() => clearError("past_wears")}
+          min={loggedWears}
+          defaultValue={(piece?.past_wears ?? 0) + loggedWears}
+          aria-invalid={!!errors.times_worn}
+          aria-describedby="times-worn-hint"
+          onChange={() => clearError("times_worn")}
         />
-        <span id="past-wears-hint" className="muted small">
-          Rough guess is fine. Outfits you log from now on get added on top.
+        <span id="times-worn-hint" className="muted small">
+          {loggedWears > 0
+            ? `Includes ${loggedWears} logged ${loggedWears === 1 ? "outfit" : "outfits"}. A rough guess for the rest is fine.`
+            : "A rough guess is fine. Each outfit you log adds 1."}
         </span>
       </Field>
 

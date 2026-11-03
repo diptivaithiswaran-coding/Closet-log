@@ -9,14 +9,15 @@ export type PieceInput = {
   price: number | null;
   purchased_on: string | null;
   photo_url: string | null;
-  past_wears: number;
+  times_worn: number; // total wears the user typed in
 };
 
 export type FieldErrors = Partial<Record<keyof PieceInput, string>>;
 
 // Shared by the form (before sending) and the server (before saving),
 // so the rules live in one place.
-export function validatePiece(p: PieceInput): FieldErrors {
+// loggedWears = how many logged outfits this piece is already in (0 for a new piece).
+export function validatePiece(p: PieceInput, loggedWears = 0): FieldErrors {
   const errors: FieldErrors = {};
 
   if (!p.name) errors.name = "Give this piece a name, like \"Black wide-leg trousers.\"";
@@ -33,10 +34,12 @@ export function validatePiece(p: PieceInput): FieldErrors {
     errors.price = "Price should be a number, $0 or more.";
   }
 
-  if (!Number.isInteger(p.past_wears) || p.past_wears < 0) {
-    errors.past_wears = "Use a whole number, 0 or more.";
-  } else if (p.past_wears > 9999) {
-    errors.past_wears = "That's a lot of wears. Keep it under 10,000.";
+  if (!Number.isInteger(p.times_worn) || p.times_worn < 0) {
+    errors.times_worn = "Use a whole number, 0 or more.";
+  } else if (p.times_worn > 9999) {
+    errors.times_worn = "That's a lot of wears. Keep it under 10,000.";
+  } else if (p.times_worn < loggedWears) {
+    errors.times_worn = `You've logged ${loggedWears} ${loggedWears === 1 ? "outfit" : "outfits"} with this piece, so it's at least ${loggedWears}. To go lower, delete an outfit.`;
   }
 
   if (p.purchased_on) {
@@ -53,7 +56,7 @@ export function readPieceForm(formData: FormData): PieceInput {
     return v === "" ? null : v;
   };
   const priceText = text("price");
-  const pastText = text("past_wears");
+  const wornText = text("times_worn");
   return {
     name: text("name"),
     category: text("category"),
@@ -64,7 +67,7 @@ export function readPieceForm(formData: FormData): PieceInput {
     price: priceText === null ? null : Number(priceText),
     purchased_on: text("purchased_on"),
     photo_url: text("photo_url"),
-    past_wears: pastText === null ? 0 : Number(pastText),
+    times_worn: wornText === null ? 0 : Number(wornText),
   };
 }
 
@@ -100,4 +103,12 @@ export function readOutfitForm(formData: FormData): OutfitInput {
     notes: text("notes"),
     piece_ids: formData.getAll("piece_ids").map(Number).filter((n) => Number.isFinite(n)),
   };
+}
+
+// Turn the form into a database row. The form asks for the TOTAL times worn;
+// the database stores only the wears from before logging (past_wears),
+// because logged outfits are counted separately.
+export function toPieceRow(p: PieceInput, loggedWears = 0) {
+  const { times_worn, ...rest } = p;
+  return { ...rest, past_wears: Math.max(0, times_worn - loggedWears) };
 }

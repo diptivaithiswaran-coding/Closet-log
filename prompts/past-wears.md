@@ -18,3 +18,17 @@ I picked **add past wears**.
 
 ## Plan vs. reality
 My plan said cost-per-wear = price ÷ number of outfits. Now it's price ÷ (past wears + outfits), because my closet existed before the app did, and old favorites looked like I never wore them.
+
+---
+
+# Follow-up: make it "Number of times worn"
+
+## Prompt
+> Maybe we should make it number of times worn.
+
+## What the agent changed
+- The box is now **"Number of times worn"** and shows the **total** (past wears + logged outfits), e.g. 12.
+- If I change it to 15, the app saves the difference as wears from before I started logging. The database still stores only past_wears, so logging an outfit still adds 1 and nothing goes out of sync.
+- It can't go below the number of logged outfits with that piece. Trying shows: "You've logged 2 outfits with this piece, so it's at least 2. To go lower, delete an outfit."
+- The hint under the box says how many logged outfits are already included.
+- No database changes.

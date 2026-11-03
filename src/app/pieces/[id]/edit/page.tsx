@@ -12,6 +12,11 @@ export default async function EditPiecePage({ params }: { params: Promise<{ id: 
   const { data: piece } = await supabase.from("pieces").select("*").eq("id", id).maybeSingle<Piece>();
   if (!piece) notFound();
 
+  const { count } = await supabase
+    .from("outfit_pieces")
+    .select("piece_id", { count: "exact", head: true })
+    .eq("piece_id", piece.id);
+
   return (
     <>
       <Header email={user.email ?? ""} />
@@ -20,6 +25,7 @@ export default async function EditPiecePage({ params }: { params: Promise<{ id: 
         <PieceForm
           action={updatePiece.bind(null, piece.id)}
           piece={piece}
+          loggedWears={count ?? 0}
           submitLabel="Save changes"
           cancelHref={`/pieces/${piece.id}`}
         />
