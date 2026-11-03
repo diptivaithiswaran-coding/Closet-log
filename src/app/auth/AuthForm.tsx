@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import type { AuthState } from "./actions";
+import ClosetRail from "./ClosetRail";
 
 type Props = {
   mode: "login" | "signup";
@@ -14,41 +15,49 @@ export default function AuthForm({ mode, action }: Props) {
   const isLogin = mode === "login";
 
   return (
-    <main className="auth">
-      <h1 className="brand">Closet Log</h1>
-      <p className="muted">Track what you own and what you actually wear.</p>
+    <main className="auth-split">
+      <section className="auth-hero">
+        <p className="auth-wordmark">Closet Log</p>
+        <p className="auth-tagline">Track what you own and what you actually wear.</p>
+        <ClosetRail />
+      </section>
 
-      <form action={formAction} className="card stack">
-        <h2>{isLogin ? "Log in" : "Create your account"}</h2>
+      <section className="auth-panel">
+        <form action={formAction} className="stack auth-form">
+          <h1>{isLogin ? "Welcome back" : "Start your closet"}</h1>
+          <p className="muted">
+            {isLogin ? "Log in to see your pieces and outfits." : "Make an account. It takes about ten seconds."}
+          </p>
 
-        <label>
-          Email
-          <input name="email" type="email" autoComplete="email" />
-        </label>
+          <label>
+            Email
+            <input name="email" type="email" autoComplete="email" />
+          </label>
 
-        <label>
-          Password
-          <input
-            name="password"
-            type="password"
-            autoComplete={isLogin ? "current-password" : "new-password"}
-          />
-        </label>
+          <label>
+            Password
+            <input
+              name="password"
+              type="password"
+              autoComplete={isLogin ? "current-password" : "new-password"}
+            />
+          </label>
 
-        {state.error && <p className="error" role="alert">{state.error}</p>}
+          {state.error && <p className="error" role="alert">{state.error}</p>}
 
-        <button className="btn" disabled={pending}>
-          {pending ? "One sec…" : isLogin ? "Log in" : "Sign up"}
-        </button>
+          <button className="btn btn-block" disabled={pending}>
+            {pending ? "One sec…" : isLogin ? "Log in" : "Sign up"}
+          </button>
 
-        <p className="muted small">
-          {isLogin ? (
-            <>New here? <Link href="/signup">Create an account</Link></>
-          ) : (
-            <>Already have an account? <Link href="/login">Log in</Link></>
-          )}
-        </p>
-      </form>
+          <p className="muted small">
+            {isLogin ? (
+              <>New here? <Link href="/signup">Create an account</Link></>
+            ) : (
+              <>Already have an account? <Link href="/login">Log in</Link></>
+            )}
+          </p>
+        </form>
+      </section>
     </main>
   );
 }
