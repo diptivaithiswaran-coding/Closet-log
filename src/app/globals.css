@@ -38,18 +38,6 @@ a { color: var(--ink); text-decoration-color: var(--rose); text-underline-offset
 .muted { color: var(--muted); }
 .small { font-size: 0.875rem; }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--line);
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.header .brand { font-size: 1.6rem; font-weight: 900; color: var(--rose); text-decoration: none; }
-.header { background: #fff; }
-.nav { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 
 .page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
@@ -205,8 +193,6 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--rose); bord
 .form > .error { margin-bottom: 0.25rem; }
 
 /* Nav */
-.nav a { text-decoration: none; font-weight: 500; }
-.nav a:hover { text-decoration: underline; text-decoration-color: var(--rose); }
 @media (max-width: 560px) { .hide-sm { display: none; } }
 
 /* Outfits */
@@ -455,3 +441,72 @@ textarea { resize: vertical; }
 .page-head > select { width: auto; }
 
 .page-intro { color: var(--ink); font-size: 1.05rem; max-width: 60ch; margin: 0.25rem 0 0; }
+
+/* Header: brand, one row of links, account menu */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.header .brand { font-size: 1.5rem; font-weight: 900; color: var(--rose); text-decoration: none; flex-shrink: 0; margin: 0; }
+.nav { display: flex; gap: 0.25rem; flex: 1; justify-content: center; }
+.nav-link {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.nav-link:hover { background: var(--cream); }
+.nav-link.on { background: var(--rose); color: #fff; }
+
+.account { position: relative; flex-shrink: 0; }
+.account summary { list-style: none; cursor: pointer; }
+.account summary::-webkit-details-marker { display: none; }
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.account summary:focus-visible .avatar { outline: 2px solid var(--rose); outline-offset: 2px; }
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.9rem;
+  min-width: 220px;
+  width: max-content;
+  max-width: calc(100vw - 2.5rem);
+  box-shadow: 0 8px 24px rgba(59, 10, 42, 0.12);
+  z-index: 10;
+}
+.account-email { margin: 0 0 0.6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
+.btn-sm { padding: 0.45rem 1rem; font-size: 0.9rem; width: 100%; }
+
+@media (max-width: 860px) {
+  .header { flex-wrap: wrap; gap: 0.5rem 1rem; }
+  .header .brand { flex: 1; }
+  .nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin: 0 -1.25rem;
+    padding: 0 1.25rem 0.25rem;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+}
