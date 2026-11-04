@@ -70,8 +70,21 @@ Clean, editorial, and photo-first. Pieces show as a grid of cards, like a shop p
 ---
 
 ## Plan vs. Reality
-*(Filled in at the end.)*
 
 | Planned feature | Shipped / Changed / Cut | Status (Done/Backlogged) | Learning | What changed and why (one line) |
 |---|---|---|---|---|
-| | | | | |
+| 1. Sign up and login | Shipped | Done | I learned that I had to turn off the "confirm your email" step, so new people can sign up and start right away during the demo. | Built as planned; fonts had to be bundled because the build couldn't download Google Fonts (#4). |
+| 2. Closet pieces (CRUD) | Changed | Done | I learned that my category list was too short once I started adding the clothes I actually own. | Added jumpsuit, romper, and "other" with a type-it-in box (#34), plus "number of times worn" (#36, #38). |
+| 3. Validation | Changed | Done | I learned that if a form has a mistake, the app should point it out before saving, so people don't lose what they already typed. | Agent also added checks for negative prices and future dates, which I kept (#8). |
+| 4. Outfits | Shipped | Done | I learned that picking clothes for an outfit was easier than I expected, because you just tap the pieces you wore. | Agent caught a time zone bug where evening logs defaulted to tomorrow (#10). |
+| 5. Stars | Shipped | Done | I learned that a feature can meet the assignment and still confuse someone using the app for the first time. | Built as planned; my tester didn't get why Starred is its own tab (see backlog below) (#12). |
+| 6. Find things | Shipped | Done | I learned that the little details matter when you sort a list. At first, clothes I hadn't added a price for jumped to the top when sorting by cheapest, which looked wrong. Now they always go to the bottom, and sorting by "most worn" shows how many times I've worn each piece. | Agent made pieces with no price sort last, and shows "Worn N times" when sorting by most worn (#14). |
+| 7. Dashboard | Changed | Done | I learned that a font can change what text means, because the ÷ sign looked like a + sign in the new font. | Cost-per-wear now counts past wears too; added a year filter because older outfits never showed on the 8-week chart (#16, #42, #40). |
+| 8. Photo upload | Shipped | Done | I learned that the app can't just trust whatever comes in when someone saves a piece. Someone could try to attach a photo that isn't theirs, so the app checks that every photo came from that person's own upload before saving it. | Was my "cut second" feature but shipped; agent added a check so only my own photo links get saved (#18). |
+| 9. Forgotten pieces | Changed | Done | I learned that I named this page for myself, and a new user could not tell what it was for. | Agent added a "never worn" section (its call; I went along); renamed "Not worn lately" after my tester asked what it was for (#20, #44). |
+| 10. Random outfit pick | Changed | Done | I learned that the feature I planned to cut first turned out to be one of the most fun parts of the demo. | Agent added a "Wear this today" button so a pick counts as a wear; I kept it (#22). |
+| Design (section 6) | Changed | Done | I learned that a calm design looked good on paper but felt too quiet once I saw the live app. | Switched from cream / dusty rose to hot pink and plum, new fonts, drawn illustrations, and a tidier menu (#30, #32, #46). |
+| Database (section 3) | Changed | Done | I learned that the agent built my database the way I planned it, with only small behind-the-scenes changes. | Same tables and relationships; uuid ids, timestamps, and two new columns (category_other, past_wears). See schema.md. |
+| Tests (section 4) | Shipped | Done | I learned that the database is what keeps each person's closet private, so that's where I had to break things to make the test fail. | Both tests pass and run on GitHub on every PR (#24, #26). |
+| Not planned: "Starred only" filter in the closet | Not built | Backlogged | — | My tester was confused by Starred being its own tab; the separate tab is required, so a filter is a later add-on. |
+
