@@ -70,8 +70,21 @@ Clean, editorial, and photo-first. Pieces show as a grid of cards, like a shop p
 ---
 
 ## Plan vs. Reality
-*(Filled in at the end.)*
 
 | Planned feature | Shipped / Changed / Cut | Status (Done/Backlogged) | Learning | What changed and why (one line) |
 |---|---|---|---|---|
-| | | | | |
+| 1. Sign up and login | Shipped | Done | Turning off "Confirm email" in Supabase matters for a live demo sign-up. | Built as planned; fonts had to be bundled because the build couldn't download Google Fonts (#4). |
+| 2. Closet pieces (CRUD) | Changed | Done | My category list was too short once I added my real closet. | Added jumpsuit, romper, and "other" with a type-it-in box (#34), plus "number of times worn" (#36, #38). |
+| 3. Validation | Changed | Done | React forms wipe themselves after a failed save unless you check first. | Agent also added checks for negative prices and future dates, which I kept (#8). |
+| 4. Outfits | Shipped | Done | The part I was most worried about went fine; tap-to-pick photos made it easy. | Agent caught a time zone bug where evening logs defaulted to tomorrow (#10). |
+| 5. Stars | Shipped | Done | Required features can still confuse a new user. | Built as planned; my tester didn't get why Starred is its own tab (see backlog below) (#12). |
+| 6. Find things | Shipped | Done | Small details like where blank prices sort are easy to miss. | Agent made pieces with no price sort last, and shows "Worn N times" when sorting by most worn (#14). |
+| 7. Dashboard | Changed | Done | Fonts can change meaning: ÷ looked like + in the new font. | Cost-per-wear now counts past wears too; added a year filter because older outfits never showed on the 8-week chart (#16, #42, #40). |
+| 8. Photo upload | Shipped | Done | Anything sent from a form can be faked, so the server has to double-check it. | Was my "cut second" feature but shipped; agent added a check so only my own photo links get saved (#18). |
+| 9. Forgotten pieces | Changed | Done | I named it for myself, not for new users. | Agent added a "never worn" section (its call; I went along); renamed "Not worn lately" after my tester asked what it was for (#20, #44). |
+| 10. Random outfit pick | Changed | Done | A feature I planned to cut first ended up being a fun demo moment. | Agent added a "Wear this today" button so a pick counts as a wear; I kept it (#22). |
+| Design (section 6) | Changed | Done | Calm looked good on paper but read too quiet live. | Switched from cream / dusty rose to hot pink and plum, new fonts, drawn illustrations, and a tidier menu (#30, #32, #46). |
+| Database (section 3) | Changed | Done | The agent built my 5 tables, but details like id types changed to fit Supabase. | Same tables and relationships; uuid ids, timestamps, and two new columns (category_other, past_wears). See schema.md. |
+| Tests (section 4) | Shipped | Done | Data isolation lives in the database, so I had to break it in Supabase, not in the code. | Both tests pass and run on GitHub on every PR (#24, #26). |
+| Not planned: "Starred only" filter in the closet | Not built | Backlogged | — | My tester was confused by Starred being its own tab; the separate tab is required, so a filter is a later add-on. |
+
