@@ -34,8 +34,10 @@ export default async function ForgottenPage() {
       <main className="page">
         <div className="page-head">
           <div>
-            <h1>Forgotten pieces</h1>
-            <p className="muted">Wear them or let them go.</p>
+            <h1>Not worn lately</h1>
+            <p className="page-intro">
+              Clothes you haven't worn in 30+ days. Wear them again, or think about letting them go.
+            </p>
           </div>
         </div>
 
