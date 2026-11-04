@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { computeStats, costPerWear } from "@/lib/stats";
 import { money } from "@/lib/format";
+import { combineWears } from "@/lib/wears";
+import { toPieceRow } from "@/lib/validation";
 import type { Piece } from "@/lib/types";
 
 // A made-up piece. Only id and price matter for this test.
@@ -40,5 +42,29 @@ describe("Dashboard: cost-per-wear", () => {
     expect(costPerWear(50, 0)).toBeNull();
     const stats = computeStats([piece(1, 120), piece(2, 50)], new Map([[1, 4]]), 4);
     expect(money(stats.avgCostPerWear)).toBe("$30.00");
+  });
+
+  it("Given a $120 piece with 2 past wears and 2 logged outfits, when the dashboard loads, then its cost-per-wear shows $30.00", () => {
+    // Given: a $120 piece I wore twice before using the app, plus 2 logged outfits
+    const jacket = { ...piece(1, 120), past_wears: 2 };
+    const loggedOutfits = [{ piece_id: 1 }, { piece_id: 1 }];
+
+    // When: the dashboard adds up wears and works out its stats
+    const wearCounts = combineWears([jacket], loggedOutfits);
+    const stats = computeStats([jacket], wearCounts, loggedOutfits.length);
+    const row = stats.perPiece.find((p) => p.piece.id === jacket.id)!;
+
+    // Then: 4 wears total, $120 / 4 = $30.00
+    expect(row.wears).toBe(4);
+    expect(money(row.costPerWear)).toBe("$30.00");
+  });
+
+  it("saves only the extra wears when I type a total on the edit form", () => {
+    // I type 4 total; 2 are already logged outfits, so 2 get saved as past wears.
+    const form = {
+      name: "Jacket", category: "outerwear", category_other: null, brand: null, color: null,
+      price: 120, purchased_on: null, photo_url: null, times_worn: 4,
+    };
+    expect(toPieceRow(form, 2).past_wears).toBe(2);
   });
 });
