@@ -10,7 +10,7 @@ export default function Header({ email }: { email: string }) {
         <Link href="/outfits">Outfits</Link>
         <Link href="/starred">Starred</Link>
         <Link href="/dashboard">Dashboard</Link>
-        <Link href="/forgotten">Forgotten</Link>
+        <Link href="/forgotten">Not worn lately</Link>
         <Link href="/pick">Random pick</Link>
         <span className="muted small hide-sm">{email}</span>
         <form action={logOut}>

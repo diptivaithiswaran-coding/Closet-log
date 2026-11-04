@@ -453,3 +453,5 @@ textarea { resize: vertical; }
 .empty-art { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto 1rem; }
 
 .page-head > select { width: auto; }
+
+.page-intro { color: var(--ink); font-size: 1.05rem; max-width: 60ch; margin: 0.25rem 0 0; }

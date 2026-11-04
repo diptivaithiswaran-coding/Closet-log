@@ -15,7 +15,7 @@ I buy a lot of clothes and had no idea what I actually wear. Closet Log lets me 
 - **Search, filter, sort.** Search by name or brand, filter by category, and sort by newest, most worn, or price.
 - **Dashboard.** Total pieces, outfits logged, average cost-per-wear, most-worn piece, an outfits-per-week chart, and a cost-per-wear table.
 - **Photos.** Add a photo to each piece (shrunk automatically before upload).
-- **Forgotten pieces.** Pieces you haven't worn in 30+ days, plus ones you've never worn.
+- **Not worn lately.** Pieces you haven't worn in 30+ days, plus ones with no logged wears yet. (Renamed from "Forgotten" after the stranger test.)
 - **Random pick.** One random top, bottom, and pair of shoes. Shuffle, or log it as today's outfit.
 
 ## Built with
